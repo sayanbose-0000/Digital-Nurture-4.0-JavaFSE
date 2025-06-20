@@ -1,0 +1,15 @@
+1 a. Explain the concept of recursion and how it can simplify certain problems.
+Add commentMore actions
+Sol:
+- Recursion is the process in which a method calls itself to solve a problem
+- Used when some operation repeats itself multiple times
+
+
+4 a. Discuss the time complexity of your recursive algorithm.
+
+Sol:
+- The time complexity of this algorithm is O(n)
+
+4 b. Explain how to optimize the recursive solution to avoid excessive computation.
+Sol:
+- This recursion can be improved through memoization (storing repetitive calculations)
