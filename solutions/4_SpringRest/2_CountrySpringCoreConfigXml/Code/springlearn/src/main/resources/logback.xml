@@ -1,0 +1,15 @@
+<!-- src/main/resources/logback.xml -->
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Set the logging level for your package to DEBUG -->
+    <logger name="com.cognizant.springlearn" level="DEBUG" />
+
+    <root level="INFO"> <!-- Default level for other logs -->
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
