@@ -7,11 +7,14 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.*;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-
 
 @Configuration
 @EnableWebSecurity
@@ -34,7 +37,7 @@ public class SecurityConfig {
             .httpBasic()
             .and()
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/authentication").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/authenticate").hasAnyRole("USER", "ADMIN")  // Changed endpoint
                 .requestMatchers("/countries").hasRole("USER")
                 .anyRequest().authenticated()
             )
@@ -47,5 +50,22 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails user = User.builder()
+                .username("user")
+                .password(passwordEncoder().encode("pwd"))
+                .roles("USER")
+                .build();
+        
+        UserDetails admin = User.builder()
+                .username("admin")
+                .password(passwordEncoder().encode("admin"))
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(user, admin);
     }
 }
